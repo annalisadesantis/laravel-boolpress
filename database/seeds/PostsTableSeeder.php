@@ -20,7 +20,7 @@ class PostsTableSeeder extends Seeder
             $new_post->subtitle = $faker->sentences();
             $new_post->author = $faker->name();
             $new_post->text = $faker->text();
-            $new_post->date = $faker->date('Y_m_d');
+            $new_post->date = $faker->date();
             $new_post->time = $faker->time();
             $new_post->save();
         }
