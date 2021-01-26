@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 // Rotta pubblica
 Route::get('/', 'HomeController@index')->name('index');
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 
 // Rotta privata
