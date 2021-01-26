@@ -22,7 +22,7 @@
                             <td>{{ $post->slug }}</td>
                             <td>
                                 <a class="btn btn-info" href="#">
-                                    Visualizza
+                                    Dettagli
                                 </a>
                             </td>
                         </tr>
