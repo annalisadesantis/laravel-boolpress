@@ -18,6 +18,6 @@ class HomeController extends Controller
 
     public function contatti()
     {
-        return view('guest.contatti ');
+        return view('guest.contatti');
     }
 }
