@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 // Rotta pubblica
 Route::get('/', 'HomeController@index')->name('index');
+Route::get('/contatti', 'HomeController@contatti')->name('contatti');
 
 Auth::routes(['register' => false]);
 
