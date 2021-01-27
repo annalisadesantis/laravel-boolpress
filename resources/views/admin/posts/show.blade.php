@@ -12,13 +12,33 @@
             </div>
             <dl>
                 <dt>Titolo</dt>
-                <dd>{{ $post->title }}</dd>
-                <dt>Slug</dt>
-                <dd>{{ $post->slug }}</dd>
-                <dt>Autore</dt>
-                <dd>{{ $post->author }}</dd>
-                <dt>Contenuto</dt>
-                <dd>{{ $post->text }}</dd>
+                <dd>
+                    {{ $post->title }}
+                </dd>
+                <dt>
+                    Slug
+                </dt>
+                <dd>
+                    {{ $post->slug }}
+                </dd>
+                <dt>
+                    Autore
+                </dt>
+                <dd>
+                    {{ $post->author }}
+                </dd>
+                <dt>
+                    Contenuto
+                </dt>
+                <dd>
+                    {{ $post->text }}
+                </dd>
+                <dt>
+                    Categoria
+                </dt>
+                <dd>
+                    {{ $post->category ? $post->category->name : '-' }}
+                </dd>
             </dl>
             <a href="{{ route('admin.posts.edit', ['post' => $post->slug]) }}"
                 class="btn btn-warning">
