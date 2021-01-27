@@ -15,7 +15,7 @@ class AddForeignCategoryPostsTable extends Migration
     {
         Schema::table('posts', function (Blueprint $table) {
             // creo prima la colonna da mettere nella tabella posts
-            $table->unsignedBigInteger('category_id')->nullable()->after('slug');
+            $table->unsignedBigInteger('category_id')->nullable()->after('text');
             // e sulla colonna creo il vincolo di chiave esterna
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
         });
