@@ -7,15 +7,21 @@
                 <h1>
                     Tutti i posts
                 </h1>
-                <ul>
-                    @foreach ($posts as $post)
-                        <li>
-                            <a href="#">
+                @foreach ($posts as $post)
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h2 class="card-title">
                                 {{ $post->title }}
+                            </h2>
+                            <a href="{{ route('posts.show', ['post' => $post->id ]) }}" class="btn btn-primary">
+                                Leggi
                             </a>
-                        </li>
-                    @endforeach
-                </ul>
+                        </div>
+                        <div class="card-footer text-muted">
+                            Scritto da {{ $post->author }}
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>

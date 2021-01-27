@@ -18,8 +18,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'HomeController@index')->name('index');
 Route::get('/contatti', 'HomeController@contatti')->name('contatti');
 Route::get('/posts', 'PostController@index')->name('posts.index');
+Route::get('/posts/{post}', 'PostController@show')->name('posts.show');
 
-// Rotte di autorizzazione con il register disattivato 
+// Rotte di autorizzazione con il register disattivato
 Auth::routes(['register' => false]);
 
 // Rotta privata
