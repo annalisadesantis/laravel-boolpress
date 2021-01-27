@@ -28,7 +28,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.posts.create');
     }
 
     /**
@@ -39,7 +39,27 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $form_data = $request->all();
+        $new_post = new Post();
+        $new_post->fill($form_data);
+        // genero lo slug
+        $slug = Str::slug($new_post->title);
+        $slug_base = $slug;
+        // verifico che lo slug non esista nel database
+        $post_presente = Post::where('slug', $slug)->first();
+        $contatore = 1;
+        // entro nel ciclo while se ho trovato un post con lo stesso $slug
+        while($post_presente) {
+            // genero un nuovo slug aggiungendo il contatore alla fine
+            $slug = $slug_base . '-' . $contatore;
+            $contatore++;
+            $post_presente = Post::where('slug', $slug)->first();
+        }
+        // quando esco dal while sono sicuro che lo slug non esiste nel db
+        // assegno lo slug al post
+        $new_post->slug = $slug;
+        $new_post->save();
+        return redirect()->route('admin.posts.index');
     }
 
     /**
@@ -48,9 +68,12 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        //
+        if(!$post) {
+            abort(404);
+        }
+        return view('admin.posts.show', ['post' => $post]);
     }
 
     /**
@@ -59,9 +82,13 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        if(!$post) {
+            abort(404);
+        }
+
+        return view('admin.posts.edit', ['post' => $post]);
     }
 
     /**
@@ -73,7 +100,29 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $form_data = $request->all();
+        // verifico se il titolo ricevuto dal form è diverso dal vecchio titolo
+        if($form_data['title'] != $post->title) {
+            // è stato modificato il titolo => devo modificare anche lo slug
+            // genero lo slug
+            $slug = Str::slug($form_data['title']);
+            $slug_base = $slug;
+            // verifico che lo slug non esista nel database
+            $post_presente = Post::where('slug', $slug)->first();
+            $contatore = 1;
+            // entro nel ciclo while se ho trovato un post con lo stesso $slug
+            while($post_presente) {
+                // genero un nuovo slug aggiungendo il contatore alla fine
+                $slug = $slug_base . '-' . $contatore;
+                $contatore++;
+                $post_presente = Post::where('slug', $slug)->first();
+            }
+            // quando esco dal while sono sicuro che lo slug non esiste nel db
+            // assegno lo slug al post
+            $form_data['slug'] = $slug;
+        }
+        $post->update($form_data);
+        return redirect()->route('admin.posts.index');
     }
 
     /**
@@ -82,8 +131,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect()->route('admin.posts.index');
     }
 }
