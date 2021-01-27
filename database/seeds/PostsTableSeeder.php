@@ -20,8 +20,6 @@ class PostsTableSeeder extends Seeder
             $new_post->title = $faker->sentence(3);
             $new_post->author = $faker->name();
             $new_post->text = $faker->text(100);
-            $new_post->date = $faker->date();
-            $new_post->time = $faker->time();
             // Genero lo slug
             $slug = Str::slug($new_post->title);
             // Salvo lo slug generato in una variabile base
