@@ -69,12 +69,14 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show($slug)
     {
+        $post = Post::where('slug', $slug)->first();
         if(!$post) {
             abort(404);
         }
-        return view('admin.posts.show', ['post' => $post]);
+        $data = ['post' => $post];
+        return view('admin.posts.show', $data);
     }
 
     /**
@@ -83,13 +85,14 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit($slug)
     {
+        $post = Post::where('slug', $slug)->first();
         if(!$post) {
             abort(404);
         }
-
-        return view('admin.posts.edit', ['post' => $post]);
+        $data = ['post' => $post];
+        return view('admin.posts.edit', $data);
     }
 
     /**
