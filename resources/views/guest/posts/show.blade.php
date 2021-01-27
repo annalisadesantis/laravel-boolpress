@@ -14,6 +14,9 @@
                         </p>
                     </div>
                     <div class="card-footer text-muted">
+                        Categoria: {{ $post->category ? $post->category->name : '-' }}
+                    </div>
+                    <div class="card-footer text-muted">
                         Scritto da {{ $post->author }}
                     </div>
                 </div>
