@@ -29,7 +29,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.categories.create');
     }
 
     /**
@@ -40,7 +40,27 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $form_data = $request->all();
+        $new_category = new Category();
+        $new_category->fill($form_data);
+        // genero lo slug
+        $slug = Str::slug($new_category->name);
+        $slug_base = $slug;
+        // verifico che lo slug non esista nel database
+        $categoria_presente = Category::where('slug', $slug)->first();
+        $contatore = 1;
+        // entro nel ciclo while se ho trovato un post con lo stesso $slug
+        while($categoria_presente) {
+            // genero un nuovo slug aggiungendo il contatore alla fine
+            $slug = $slug_base . '-' . $contatore;
+            $contatore++;
+            $categoria_presente = Category::where('slug', $slug)->first();
+        }
+        // quando esco dal while sono sicuro che lo slug non esiste nel db
+        // assegno lo slug al post
+        $new_category->slug = $slug;
+        $new_category->save();
+        return redirect()->route('admin.categories.index');
     }
 
     /**
@@ -49,9 +69,14 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+        $category = Category::where('slug', $slug)->first();
+        if(!$category) {
+            abort(404);
+        }
+        $data = ['category' => $category];
+        return view('admin.categories.show', $data);
     }
 
     /**
@@ -60,9 +85,14 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
-        //
+        $category = Category::where('slug', $slug)->first();
+        if(!$category) {
+            abort(404);
+        }
+        $data = ['category' => $category];
+        return view('admin.categories.edit', $data);
     }
 
     /**
@@ -72,9 +102,31 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        $form_data = $request->all();
+        // verifico se il titolo ricevuto dal form è diverso dal vecchio titolo
+        if($form_data['name'] != $category->name) {
+            // è stato modificato il titolo => devo modificare anche lo slug
+            // genero lo slug
+            $slug = Str::slug($form_data['name']);
+            $slug_base = $slug;
+            // verifico che lo slug non esista nel database
+            $categoria_presente = Category::where('slug', $slug)->first();
+            $contatore = 1;
+            // entro nel ciclo while se ho trovato un post con lo stesso $slug
+            while($categoria_presente) {
+                // genero un nuovo slug aggiungendo il contatore alla fine
+                $slug = $slug_base . '-' . $contatore;
+                $contatore++;
+                $categoria_presente = Category::where('slug', $slug)->first();
+            }
+            // quando esco dal while sono sicuro che lo slug non esiste nel db
+            // assegno lo slug al post
+            $form_data['slug'] = $slug;
+        }
+        $category->update($form_data);
+        return redirect()->route('admin.categories.index');
     }
 
     /**
@@ -83,8 +135,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return redirect()->route('admin.categories.index');
     }
 }
