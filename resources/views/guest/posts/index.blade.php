@@ -13,7 +13,7 @@
                             <h2 class="card-title">
                                 {{ $post->title }}
                             </h2>
-                            <a href="{{ route('posts.show', ['post' => $post->slug ]) }}" class="btn btn-primary">
+                            <a href="{{ route('posts.show', ['slug' => $post->slug ]) }}" class="btn btn-primary">
                                 Leggi
                             </a>
                         </div>
