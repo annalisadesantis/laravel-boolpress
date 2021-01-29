@@ -24,6 +24,14 @@
                         @endif
                     </div>
                     <div class="card-footer text-muted">
+                        Tags:
+                        @forelse ($post->tags as $tag)
+                            {{ $tag->name }}{{ !$loop->last ? ',' : '' }}
+                        @empty
+                            -
+                        @endforelse
+                    </div>
+                    <div class="card-footer text-muted">
                         Scritto da {{ $post->author }}
                     </div>
                 </div>
