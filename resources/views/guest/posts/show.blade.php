@@ -14,7 +14,14 @@
                         </p>
                     </div>
                     <div class="card-footer text-muted">
-                        Categoria: {{ $post->category ? $post->category->name : '-' }}
+                        Categoria:
+                        @if ($post->category)
+                            <a href="{{ route('categories.show', ['slug' => $post->category->slug]) }}">
+                                {{ $post->category->name }}
+                            </a>
+                        @else
+                            -
+                        @endif
                     </div>
                     <div class="card-footer text-muted">
                         Scritto da {{ $post->author }}
