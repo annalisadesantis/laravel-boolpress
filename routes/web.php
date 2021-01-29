@@ -35,8 +35,6 @@ Route::middleware('auth')->namespace('Admin')->prefix('admin')->name('admin.')->
     Route::get('/', 'HomeController@index')->name('index');
     Route::resource('/posts', 'PostController');
     Route::resource('/categories', 'CategoryController');
-    //Route::resource('/users', 'UserController');
-
     Route::get('/users', 'UserController@index')->name('users.index');
 
 });

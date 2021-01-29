@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Post;
 use App\Category;
+use App\Tag;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -31,7 +32,8 @@ class PostController extends Controller
     public function create()
     {
         $data = [
-            'categories' => Category::all()
+            'categories' => Category::all(),
+            'tags' => Tag::all()
         ];
         return view('admin.posts.create', $data);
     }
@@ -64,6 +66,10 @@ class PostController extends Controller
         // assegno lo slug al post
         $new_post->slug = $slug;
         $new_post->save();
+        // Aggiungo la sincronizzazione dei tag collegati al nuovo post appena creato
+        // $form_data perchè qui dentro ci sono i dati che mi arraivano dal form di create
+        // ['tags'] nome dell'array che mi arriva dal form
+        $new_post->tags()->sync($form_data['tags']);
         return redirect()->route('admin.posts.index');
     }
 
