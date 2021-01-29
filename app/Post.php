@@ -12,4 +12,9 @@ class Post extends Model
     public function category() {
         return $this->belongsTo('App\Category');
     }
+
+    // creo la relazione may to many con la tabella tags
+    public function tags() {
+        return $this->belongsToMany('App\Tag');
+    }
 }
