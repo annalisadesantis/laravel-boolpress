@@ -19,6 +19,9 @@ Route::get('/', 'HomeController@index')->name('index');
 Route::get('/contatti', 'HomeController@contatti')->name('contatti');
 Route::get('/posts', 'PostController@index')->name('posts.index');
 Route::get('/posts/{post}', 'PostController@show')->name('posts.show');
+Route::get('/categories/{slug}', 'CategoryController@show')->name('categories.show');
+
+
 
 // Rotte di autorizzazione con il register disattivato
 Auth::routes(['register' => false]);
