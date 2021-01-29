@@ -26,7 +26,9 @@
                     <div class="card-footer text-muted">
                         Tags:
                         @forelse ($post->tags as $tag)
-                            {{ $tag->name }}{{ !$loop->last ? ',' : '' }}
+                            <a href="{{ route('tags.show', ['slug' => $tag->slug]) }}">
+                                {{ $tag->name }}{{ !$loop->last ? ',' : '' }}
+                            </a>
                         @empty
                             -
                         @endforelse
