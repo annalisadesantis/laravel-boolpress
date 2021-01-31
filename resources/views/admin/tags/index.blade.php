@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="d-flex justify-content-between align-items-center">
                 <h1>Tutti i tag</h1>
-                <a href="#" class="btn btn-primary">
+                <a href="{{ route('admin.tags.create')}}" class="btn btn-primary">
                     Crea un nuovo tag
                 </a>
             </div>

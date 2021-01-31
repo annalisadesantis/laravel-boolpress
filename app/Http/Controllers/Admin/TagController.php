@@ -29,7 +29,7 @@ class TagController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.tags.create');
     }
 
     /**
@@ -40,7 +40,27 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $form_data = $request->all();
+        $new_tag = new Tag();
+        $new_tag->fill($form_data);
+        // genero lo slug
+        $slug = Str::slug($new_tag->name);
+        $slug_base = $slug;
+        // verifico che lo slug non esista nel database
+        $tag_presente = Tag::where('slug', $slug)->first();
+        $contatore = 1;
+        // entro nel ciclo while se ho trovato un post con lo stesso $slug
+        while($tag_presente) {
+            // genero un nuovo slug aggiungendo il contatore alla fine
+            $slug = $slug_base . '-' . $contatore;
+            $contatore++;
+            $tag_presente = Tag::where('slug', $slug)->first();
+        }
+        // quando esco dal while sono sicuro che lo slug non esiste nel db
+        // assegno lo slug al post
+        $new_tag->slug = $slug;
+        $new_tag->save();
+        return redirect()->route('admin.tags.index');
     }
 
     /**
