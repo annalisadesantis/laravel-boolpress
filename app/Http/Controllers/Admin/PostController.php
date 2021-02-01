@@ -47,6 +47,15 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        // funzione di validificazione dei dati inseriti
+        $request->validate([
+            'title' => 'required|max:255',
+            'author' => 'required',
+            'text' => 'required',
+            'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'exists:tags,id'
+        ]);
+
         $form_data = $request->all();
         $new_post = new Post();
         $new_post->fill($form_data);
@@ -122,6 +131,15 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        // funzione di validificazione dei dati inseriti
+        $request->validate([
+            'title' => 'required|max:255',
+            'author' => 'required',
+            'text' => 'required',
+            'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'exists:tags,id'
+        ]);
+
         $form_data = $request->all();
         // verifico se il titolo ricevuto dal form è diverso dal vecchio titolo
         if($form_data['title'] != $post->title) {
