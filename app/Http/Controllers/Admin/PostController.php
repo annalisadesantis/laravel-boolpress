@@ -70,7 +70,10 @@ class PostController extends Controller
         // Aggiungo la sincronizzazione dei tag collegati al nuovo post appena creato
         // $form_data perchè qui dentro ci sono i dati che mi arraivano dal form di create
         // ['tags'] nome dell'array che mi arriva dal form
-        $new_post->tags()->sync($form_data['tags']);
+        if(array_key_exists('tags', $form_data)) {
+            // aggiungo i tag al post
+            $new_post->tags()->sync($form_data['tags']);
+        }
         return redirect()->route('admin.posts.index');
     }
 
@@ -141,7 +144,10 @@ class PostController extends Controller
             $form_data['slug'] = $slug;
         }
         $post->update($form_data);
-        $post->tags()->sync($form_data['tags']);
+        if(array_key_exists('tags', $form_data)) {
+           // aggiungo i tag al post
+           $post->tags()->sync($form_data['tags']);
+       }
         return redirect()->route('admin.posts.index');
     }
 
