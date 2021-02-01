@@ -26,21 +26,23 @@
                 @method('PUT')
                 <div class="form-group">
                     <label>Titolo</label>
-                    <input type="text" name="title" class="form-control" placeholder="Inserisci il titolo" value="{{ old('title', $post->title) }}" maxlength="255" required>
+                    <input type="text" name="title" class="form-control" placeholder="Inserisci il titolo" value="{{ old('title', $post->title) }}" maxlength="255">
                     @error('title')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label>Autore</label>
-                    <input type="text" name="author" class="form-control" placeholder="Inserisci l'autore" maxlength="255" required value="{{ old('author', $post->title) }}">
+                    <input type="text" name="author" class="form-control" placeholder="Inserisci l'autore" maxlength="255" value="{{ old('author', $post->title) }}">
                     @error('author')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label>Contenuto</label>
-                    <textarea name="text" class="form-control" rows="10" placeholder="Inizia a scrivere qualcosa..." required>{{ old('text', $post->text) }}</textarea>
+                    <textarea name="text" class="form-control" rows="10" placeholder="Inizia a scrivere qualcosa...">
+                        {{ old('text', $post->text) }}
+                    </textarea>
                     @error('text')
                        <div class="alert alert-danger">{{ $message }}</div>
                    @enderror
