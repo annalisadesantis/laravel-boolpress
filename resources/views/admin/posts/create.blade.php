@@ -39,7 +39,7 @@
                 </div>
                 <div class="form-group">
                     <label>Contenuto</label>
-                    <textarea name="text" class="form-control" rows="20" placeholder="Inizia a scrivere qualcosa..." required>
+                    <textarea name="text" class="form-control" rows="20" placeholder="Inizia a scrivere qualcosa...">
                         {{ old('text') }}
                     </textarea>
                     @error('text')
